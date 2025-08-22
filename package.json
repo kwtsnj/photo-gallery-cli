@@ -1,0 +1,49 @@
+{
+  "name": "@kwtsnj/photo-gallery-cli",
+  "version": "0.0.1-alpha",
+  "description": "",
+  "main": "./dist/index.js",
+  "bin": {
+    "photo-gallery-cli": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "exec": "node ./bin/index.js",
+    "exec:scan": "npm run exec -- scan --root ./",
+    "exec:build": "npm run exec -- build --out ./"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwtsnj/photo-gallery-cli.git"
+  },
+  "keywords": [],
+  "author": "kwtsnj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kwtsnj/photo-gallery-cli/issues"
+  },
+  "homepage": "https://github.com/kwtsnj/photo-gallery-cli#readme",
+  "volta": {
+    "node": "22.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.1",
+    "@types/yargs": "^17.0.33",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "image-size": "^2.0.2",
+    "yargs": "^18.0.0"
+  },
+  "files": [
+    "./bin",
+    "./dist"
+  ]
+}
