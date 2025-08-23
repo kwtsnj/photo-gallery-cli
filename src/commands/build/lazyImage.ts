@@ -2,17 +2,13 @@ import { escapeHtml, html } from './htmlHelper.js';
 
 export const LAZY_IMAGE_CLICK_EVENT_NAME = 'lazy-image-click';
 
-const PHOTO_MAX_SIZE = {
-  width: 210,
-  height: 150,
-};
-
 const lazyImageHtmlTemplate = html`
   <style>
     :host {
       display: inline-block;
     }
     .photo {
+      height: 100%;
       object-fit: contain;
       box-shadow: 10px 5px 5px #bbbbbb;
     }
@@ -25,26 +21,36 @@ const lazyImageHtmlTemplate = html`
 
 export const lazyImageScript = html`
   <script>
+    const imgIntersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.load();
+        } else {
+          entry.target.unload();
+        }
+      });
+    });
+    const onImgClick = (event) => {
+      console.log(event.target);
+      event.target.dispatchEvent(
+        new CustomEvent('${LAZY_IMAGE_CLICK_EVENT_NAME}', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            src: event.target.dataset.src,
+          },
+        }),
+      );
+    };
+
     const template = document.createElement('template');
     template.innerHTML = \`${lazyImageHtmlTemplate}\`;
 
     class LazyImg extends HTMLElement {
-      intersectionObserver;
       img;
-      onImgClick = () =>
-        this.dispatchEvent(
-          new CustomEvent(LAZY_IMAGE_CLICK_EVENT_NAME, {
-            bubbles: true,
-            composed: true,
-            detail: {
-              src: this.dataset.src,
-            },
-          }),
-        );
 
       constructor() {
         super();
-        this.intersectionObserver = null;
 
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
@@ -58,34 +64,27 @@ export const lazyImageScript = html`
 
       connectedCallback() {
         if (this.img) {
-          this.img.addEventListener('click', this.onImgClick);
+          this.addEventListener('click', onImgClick);
         }
-        const src = this.dataset.src;
-
-        if (src) {
-          this.intersectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                // 表示領域内に入った場合は画像を読み込み
-                this.img.src = src;
-              } else {
-                // 表示領域外に出た場合は画像を解放
-                this.img.src = '';
-              }
-            });
-          });
-          this.intersectionObserver.observe(this);
-        }
+        imgIntersectionObserver.observe(this);
       }
 
       disconnectedCallback() {
         if (this.img) {
-          this.img.removeEventListener('click', this.onImgClick);
+          this.removeEventListener('click', onImgClick);
         }
-        if (this.intersectionObserver) {
-          this.intersectionObserver.disconnect();
-          this.intersectionObserver = null;
+        imgIntersectionObserver.unobserve(this);
+      }
+
+      load() {
+        const dataSrc = this.dataset.src;
+        if (dataSrc) {
+          this.img.src = dataSrc;
         }
+      }
+
+      unload() {
+        this.img.src = '';
       }
     }
 
@@ -93,40 +92,12 @@ export const lazyImageScript = html`
   </script>
 `;
 
-export const createLazyImage = (
-  filePath: string,
-  fileName: string,
-  imageWidth: number,
-  imageHeight: number,
-) => {
-  const photoSize = fitContain(
-    imageWidth,
-    imageHeight,
-    PHOTO_MAX_SIZE.width,
-    PHOTO_MAX_SIZE.height,
-  );
+export const createLazyImage = (filePath: string, fileName: string) => {
   return html`
     <lazy-img
       class="photo"
       data-src="${escapeHtml(filePath)}"
       data-alt="${fileName}"
-      width="${photoSize.width}"
-      height="${photoSize.height}"
     ></lazy-img>
   `;
 };
-
-function fitContain(
-  imageWidth: number,
-  imageHeight: number,
-  frameWidth: number,
-  frameHeight: number,
-): { width: number; height: number } {
-  const scaleX = frameWidth / imageWidth;
-  const scaleY = frameHeight / imageHeight;
-  const scale = Math.min(scaleX, scaleY);
-  return {
-    width: Math.round(imageWidth * scale),
-    height: Math.round(imageHeight * scale),
-  };
-}

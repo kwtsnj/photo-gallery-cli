@@ -14,6 +14,10 @@ export const pageTemplate = (theme: string, gallery: string) => html`
           margin: 0;
         }
 
+        lazy-img {
+          height: 150px;
+        }
+
         .container {
           display: flex;
           width: 100%;
@@ -44,11 +48,6 @@ export const pageTemplate = (theme: string, gallery: string) => html`
           border-radius: 4px;
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
-
-        /*.photo {*/
-        /*  width: 210px;*/
-        /*  height: 150px;*/
-        /*}*/
       </style>
     </head>
     <body class="">
@@ -63,7 +62,7 @@ export const pageTemplate = (theme: string, gallery: string) => html`
         const overlayImg = overlay.querySelector('img');
 
         window.addEventListener('load', () => {
-          this.addEventListener(${LAZY_IMAGE_CLICK_EVENT_NAME}, (evt) => {
+          this.addEventListener('${LAZY_IMAGE_CLICK_EVENT_NAME}', (evt) => {
             const imgSrc = evt?.detail?.src;
             if (imgSrc) {
               overlayImg.src = imgSrc;
@@ -78,8 +77,4 @@ export const pageTemplate = (theme: string, gallery: string) => html`
       </script>
     </body>
   </html>
-`;
-
-export const photoFrameTemplate = (contents: string) => html`
-  <div class="photo-frame">${contents}</div>
 `;
