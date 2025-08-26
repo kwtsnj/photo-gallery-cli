@@ -1,22 +1,26 @@
-import { escapeHtml, html } from './htmlHelper.js';
+import {escapeHtml, html} from './htmlHelper.js';
 
 export const LAZY_IMAGE_CLICK_EVENT_NAME = 'lazy-image-click';
+
+const PHOTO_MAX_HEIGHT = 150;
 
 const lazyImageHtmlTemplate = html`
   <style>
     :host {
       display: inline-block;
     }
+
     .photo {
       height: 100%;
       object-fit: contain;
       box-shadow: 10px 5px 5px #bbbbbb;
     }
+
     .photo:hover {
       cursor: pointer;
     }
   </style>
-  <img src="" id="photo" class="photo" alt="" />
+  <img src="" id="photo" class="photo" alt=""/>
 `;
 
 export const lazyImageScript = html`
@@ -52,7 +56,7 @@ export const lazyImageScript = html`
       constructor() {
         super();
 
-        const shadowRoot = this.attachShadow({ mode: 'open' });
+        const shadowRoot = this.attachShadow({mode: 'open'});
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.img = this.shadowRoot.getElementById('photo');
 
@@ -92,12 +96,34 @@ export const lazyImageScript = html`
   </script>
 `;
 
-export const createLazyImage = (filePath: string, fileName: string) => {
-  return html`
-    <lazy-img
-      class="photo"
-      data-src="${escapeHtml(filePath)}"
-      data-alt="${fileName}"
-    ></lazy-img>
-  `;
+export const createLazyImage = (
+    filePath: string,
+    fileName: string,
+    imageWidth: number,
+    imageHeight: number) => {
+    const photoSize = fitContain(
+        imageWidth,
+        imageHeight,
+        PHOTO_MAX_HEIGHT
+    );
+    return html`
+      <lazy-img
+        class="photo"
+        data-src="${escapeHtml(filePath)}"
+        data-alt="${fileName}"
+        style="width:${photoSize.width}px;height:${photoSize.height}px;">
+      </lazy-img>
+    `;
 };
+
+function fitContain(
+    imageWidth: number,
+    imageHeight: number,
+    frameHeight: number,
+): { width: number; height: number } {
+    const scaleY = frameHeight / imageHeight;
+    return {
+        width: Math.round(imageWidth * scaleY),
+        height: frameHeight,
+    };
+}

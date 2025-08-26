@@ -14,10 +14,6 @@ export const pageTemplate = (theme: string, gallery: string) => html`
           margin: 0;
         }
 
-        lazy-img {
-          height: 150px;
-        }
-
         .container {
           display: flex;
           width: 100%;

@@ -82,7 +82,7 @@ function convertToImage(
   if (files.length > 0) {
     const photoElements: string[] = files.map((file) => {
       const filePath = path.join(baseDirectoryPath, file.name);
-      return createLazyImage(filePath, file.name);
+      return createLazyImage(filePath, file.name, file.width, file.height);
     });
     htmlElements.push(`
         <h2>${escapeHtml(hierarchy)}</h2>
