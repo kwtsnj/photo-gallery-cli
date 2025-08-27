@@ -1,0 +1,14 @@
+# IDE
+.idea
+
+#Dependencies
+node_modules
+
+# Deploy
+dist
+
+# HTML files
+**/*.html
+
+# generated codes
+**/*.dataUrl.ts
