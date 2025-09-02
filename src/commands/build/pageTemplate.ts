@@ -2,13 +2,12 @@ import { html } from './htmlHelper.js';
 import { LAZY_IMAGE_CLICK_EVENT_NAME, lazyImageScript } from './lazyImage.js';
 
 // language=html
-export const pageTemplate = (theme: string, gallery: string) => html`
+export const pageTemplate = (gallery: string) => html`
   <!DOCTYPE html>
   <html lang="ja">
     <head>
       <meta charset="UTF-8" />
       <title>Photo Gallery</title>
-      <link rel="stylesheet" href="${theme}.css" />
       <style>
         body {
           margin: 0;

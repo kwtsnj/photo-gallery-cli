@@ -13,7 +13,6 @@ import { createLazyImage } from './lazyImage.js';
 
 interface BuildArgs {
   json: string;
-  theme: string;
   out: string;
 }
 
@@ -29,12 +28,6 @@ const command: CommandModule<{}, BuildArgs> = {
         default: './metadata.json',
         describe: 'metadata.json のパス',
       })
-      .option('theme', {
-        alias: 't',
-        type: 'string',
-        default: 'default',
-        describe: 'テーマ名（例: default, dark）',
-      })
       .option('out', {
         alias: 'o',
         type: 'string',
@@ -44,17 +37,16 @@ const command: CommandModule<{}, BuildArgs> = {
   handler: async (argv) => {
     console.log('[build] 実行');
     console.log('json:', argv.json);
-    console.log('theme:', argv.theme);
     console.log('out:', argv.out);
     try {
-      await buildGallery(argv.json, argv.theme, argv.out);
+      await buildGallery(argv.json, argv.out);
     } catch (e) {
       console.error('Build failed:', e);
     }
   },
 };
 
-async function buildGallery(jsonPath: string, theme: string, outDir: string) {
+async function buildGallery(jsonPath: string, outDir: string) {
   const rootNode: RootNode = JSON.parse(await fs.readFile(jsonPath, 'utf-8'));
   const imgElements = convertToImage(
     rootNode.absolutePath,
@@ -65,7 +57,7 @@ async function buildGallery(jsonPath: string, theme: string, outDir: string) {
   await fs.mkdir(outDir, { recursive: true });
   await fs.writeFile(
     path.join(outDir, 'index.html'),
-    pageTemplate(theme, imgElements.join('\n')),
+    pageTemplate(imgElements.join('\n')),
     'utf-8',
   );
   console.log(`Gallery generated at ${path.join(outDir, 'index.html')}`);
