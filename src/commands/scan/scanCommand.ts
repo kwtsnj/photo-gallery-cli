@@ -5,6 +5,7 @@ import {
   type ScanCommandHandler,
 } from './scanCommandHandler.js';
 import { DEFAULT_METADATA_FILE_NAME } from '../consts.js';
+import type { Camelize } from '../utilityTypes';
 
 export interface PrimitiveScanArgs {
   'input-dir': string;
@@ -12,11 +13,10 @@ export interface PrimitiveScanArgs {
   extensions: string;
 }
 
-export interface ScanArgs {
-  inputDir: string;
-  outputFile: string;
+type CamelizeScanArgs = Camelize<PrimitiveScanArgs>;
+export type ScanArgs = Omit<CamelizeScanArgs, 'extensions'> & {
   extensions: string[];
-}
+};
 
 type ScanCommandModule = CommandModule<unknown, PrimitiveScanArgs>;
 

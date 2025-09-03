@@ -5,16 +5,14 @@ import {
   GalleryHandler,
 } from './buildCommandHandler';
 import { DEFAULT_METADATA_FILE_NAME } from '../consts.js';
+import type { Camelize } from '../utilityTypes.js';
 
 interface PrimitiveBuildArgs {
   'input-file': string;
   'output-file': string;
 }
 
-export interface BuildArgs {
-  inputFile: string;
-  outputFile: string;
-}
+export type BuildArgs = Camelize<PrimitiveBuildArgs>;
 
 const command: CommandModule<{}, PrimitiveBuildArgs> = {
   command: 'build',
