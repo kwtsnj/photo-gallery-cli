@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="exec:scan" type="NodeJSConfigurationType" application-parameters="scan --input-dir ./ --output-file ./metadata.json" path-to-js-file="./src/index.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>

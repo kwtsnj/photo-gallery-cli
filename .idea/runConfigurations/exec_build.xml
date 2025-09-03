@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="exec:build" type="NodeJSConfigurationType" application-parameters="build --input-file ./metadata.json --output-file ./index.html" path-to-js-file="./src/index.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>
