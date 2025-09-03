@@ -22,14 +22,14 @@ const command: CommandModule<{}, PrimitiveBuildArgs> = {
   builder: (yargs: Argv) =>
     yargs
       .option('input-file', {
-        alias: 'i',
+        alias: ['i', 'input'],
         type: 'string',
         demandOption: true,
         default: `./${DEFAULT_METADATA_FILE_NAME}`,
         describe: 'metadata.json のパス',
       })
       .option('output-file', {
-        alias: 'o',
+        alias: ['o', 'output'],
         type: 'string',
         default: './dist',
         describe: '出力先ディレクトリ',

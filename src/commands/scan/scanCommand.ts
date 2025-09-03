@@ -9,7 +9,7 @@ import { DEFAULT_METADATA_FILE_NAME } from '../consts.js';
 export interface PrimitiveScanArgs {
   'input-dir': string;
   'output-file': string;
-  ext: string;
+  extensions: string;
 }
 
 export interface ScanArgs {
@@ -26,19 +26,19 @@ const command: ScanCommandModule = {
   builder: (yargs: Argv) =>
     yargs
       .option('input-dir', {
-        alias: 'i',
+        alias: ['i', 'input'],
         type: 'string',
         demandOption: true,
         describe: 'スキャン対象のフォルダ',
       })
       .option('output-file', {
-        alias: 'o',
+        alias: ['o', 'out'],
         type: 'string',
         default: `./${DEFAULT_METADATA_FILE_NAME}`,
         describe: 'スキャン結果の出力ファイル',
       })
-      .option('ext', {
-        alias: 'e',
+      .option('extensions', {
+        alias: ['e', 'ext'],
         type: 'string',
         default: 'jpg,jpeg,png',
         describe: '対象拡張子(（)カンマ区切り)',
@@ -50,7 +50,7 @@ async function handleArgv(argv: ArgumentsCamelCase<PrimitiveScanArgs>) {
   const args: ScanArgs = {
     inputDir: argv.inputDir,
     outputFile: argv.outputFile,
-    extensions: argv.ext.split(',').map((e) => e.trim().toLowerCase()),
+    extensions: argv.extensions.split(',').map((e) => e.trim().toLowerCase()),
   };
   await processHandlers(
     args,
