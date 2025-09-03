@@ -9,8 +9,8 @@
   "scripts": {
     "build": "tsc",
     "exec": "node ./bin/index.js",
-    "exec:scan": "npm run exec -- scan --root ./",
-    "exec:build": "npm run exec -- build --out ./"
+    "exec:scan": "npm run exec -- scan",
+    "exec:build": "npm run exec -- build"
   },
   "type": "module",
   "repository": {

@@ -1,5 +1,5 @@
 export interface RootNode {
-  absolutePath: string;
+  path: string;
   contents: ContentsNode[];
 }
 
