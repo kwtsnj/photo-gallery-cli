@@ -1,5 +1,8 @@
 import { html } from './htmlHelper.js';
-import { LAZY_IMAGE_CLICK_EVENT_NAME, lazyImageScript } from './lazyImage.js';
+import {
+  LAZY_IMAGE_CLICK_EVENT_NAME,
+  lazyImageScript,
+} from './components/lazy-image.js';
 
 // language=html
 export const pageTemplate = (gallery: string) => html`

@@ -1,4 +1,4 @@
-import { escapeHtml, html } from './htmlHelper.js';
+import { escapeHtml, html } from '../htmlHelper.js';
 
 export const LAZY_IMAGE_CLICK_EVENT_NAME = 'lazy-image-click';
 

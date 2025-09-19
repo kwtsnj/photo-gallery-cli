@@ -8,7 +8,7 @@ import type {
   RootNode,
 } from '../metadataNode.js';
 import { pageTemplate } from './pageTemplate.js';
-import { createLazyImage } from './lazyImage.js';
+import { createLazyImage } from './components/lazy-image.js';
 import { escapeHtml } from './htmlHelper.js';
 
 export interface BuildCommandHandler {
