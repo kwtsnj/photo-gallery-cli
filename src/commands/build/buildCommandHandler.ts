@@ -59,8 +59,8 @@ export class GalleryHandler implements BuildCommandHandler {
       });
       htmlElements.push(`
         <h2>${escapeHtml(hierarchy)}</h2>
-        <div class="photo-container">${photoElements.join('\n')}</div>
-    `);
+        <image-container>${photoElements.join('\n')}</image-container>
+      `);
     }
 
     const directories = this.getDirectories(contents);

@@ -1,4 +1,5 @@
 import { html } from './htmlHelper.js';
+import { imageContainerScript } from './components/image-container.js';
 import {
   LAZY_IMAGE_CLICK_EVENT_NAME,
   lazyImageScript,
@@ -68,14 +69,6 @@ export const pageTemplate = (gallery: string) => html`
           justify-content: center;
         }
 
-        .photo-container {
-          display: flex;
-          width: 100%;
-          flex-wrap: wrap;
-          background-color: lavender;
-          gap: 20px 10px;
-        }
-
         .overlay.active {
           display: flex;
         }
@@ -112,7 +105,7 @@ export const pageTemplate = (gallery: string) => html`
           ${gallery}
         </main>
       </div>
-      ${lazyImageScript}
+      ${imageContainerScript} ${lazyImageScript}
       <script>
         const overlay = document.getElementById('overlay');
         const overlayImg = overlay.querySelector('img');

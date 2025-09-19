@@ -24,7 +24,7 @@ const lazyImageHtmlTemplate = html`
 `;
 
 export const lazyImageScript = html`
-  <script>
+  <script type="module">
     const imgIntersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
