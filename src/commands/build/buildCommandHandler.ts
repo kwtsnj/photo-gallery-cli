@@ -59,7 +59,7 @@ export class GalleryHandler implements BuildCommandHandler {
       });
       htmlElements.push(`
         <h2>${escapeHtml(hierarchy)}</h2>
-        <div class="container">${photoElements.join('\n')}</div>
+        <div class="photo-container">${photoElements.join('\n')}</div>
     `);
     }
 

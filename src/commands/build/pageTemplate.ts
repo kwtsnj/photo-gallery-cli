@@ -9,6 +9,11 @@ export const pageTemplate = (gallery: string) => html`
       <meta charset="UTF-8" />
       <title>Photo Gallery</title>
       <style>
+        html {
+          /* アンカー移動をスムーズに */
+          scroll-behavior: smooth;
+        }
+
         body {
           margin: 0;
           background-image:
@@ -30,10 +35,22 @@ export const pageTemplate = (gallery: string) => html`
 
         .container {
           display: flex;
-          width: 100%;
-          flex-wrap: wrap;
-          background-color: lavender;
-          gap: 20px 10px;
+          height: 100vh;
+        }
+
+        .sidebar {
+          width: 200px; /* 左メニュー幅 */
+          background: #f0f0f0;
+          padding: 1rem;
+          box-sizing: border-box;
+          border-right: 1px solid #ccc;
+        }
+
+        .main-content {
+          flex: 1; /* 残りの幅を埋める */
+          padding: 1rem;
+          overflow-y: auto; /* 縦スクロール可能 */
+          box-sizing: border-box;
         }
 
         .overlay {
@@ -46,6 +63,14 @@ export const pageTemplate = (gallery: string) => html`
           display: none;
           align-items: center;
           justify-content: center;
+        }
+
+        .photo-container {
+          display: flex;
+          width: 100%;
+          flex-wrap: wrap;
+          background-color: lavender;
+          gap: 20px 10px;
         }
 
         .overlay.active {
@@ -65,7 +90,25 @@ export const pageTemplate = (gallery: string) => html`
       <div id="overlay" class="overlay">
         <img src="" alt="" />
       </div>
-      <div>${gallery}</div>
+      <div class="container">
+        <!-- 左側：リンク集 -->
+        <nav class="sidebar">
+          <a href="#section1">セクション1</a>
+          <a href="#section2">セクション2</a>
+          <a href="#section3">セクション3</a>
+        </nav>
+        <main class="main-content">
+          <h2 id="section1">セクション1</h2>
+          <p>ここはセクション1の内容です。スクロールできます。</p>
+
+          <h2 id="section2">セクション2</h2>
+          <p>ここはセクション2の内容です。</p>
+
+          <h2 id="section3">セクション3</h2>
+          <p>ここはセクション3の内容です。</p>
+          ${gallery}
+        </main>
+      </div>
       ${lazyImageScript}
       <script>
         const overlay = document.getElementById('overlay');
