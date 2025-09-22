@@ -12,7 +12,7 @@ const imageContainerHtmlTemplate = html`
       flex-direction: column;
       width: 100%;
       border: 1px solid #000;
-      border-radius: 8px;
+      border-radius: 3px;
       background-color: #f5f5f5;
       overflow: hidden;
     }
@@ -20,21 +20,21 @@ const imageContainerHtmlTemplate = html`
     .card-header {
       color: var(--main-color-primary);
       background-color: var(--main-card-header-color-primary);
-      padding: 0 10px;
+      padding: 0.5em 1em;
       border-bottom: 1px solid #000;
     }
 
     .card-body {
       display: flex;
       width: 100%;
-      padding: 10px;
+      padding: 0.5em 1em;
       flex-wrap: wrap;
       gap: 20px 10px;
     }
 
     .card-footer {
       background-color: bisque;
-      padding: 0 10px;
+      padding: 0.5em 1em;
       border-top: 1px solid #000;
     }
   </style>
