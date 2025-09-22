@@ -99,19 +99,8 @@ export const pageTemplate = (
         <img src="" alt="" />
       </div>
       <div class="container">
-        <!-- 左側：リンク集 -->
         <nav class="sidebar">${sidebarListElement}</nav>
-        <main class="main-content">
-          <h2 id="section1">セクション1</h2>
-          <p>ここはセクション1の内容です。スクロールできます。</p>
-
-          <h2 id="section2">セクション2</h2>
-          <p>ここはセクション2の内容です。</p>
-
-          <h2 id="section3">セクション3</h2>
-          <p>ここはセクション3の内容です。</p>
-          ${gallery}
-        </main>
+        <main class="main-content">${gallery}</main>
       </div>
       ${imageContainerScript} ${lazyImageScript}
       <script>
