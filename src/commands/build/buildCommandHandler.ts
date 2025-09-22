@@ -3,8 +3,7 @@ import path from 'path';
 import type { BuildArgs } from './buildCommand.js';
 import type {
   ContentsNode,
-  DirectoryNode,
-  FileNode,
+  ContentsNodeWithType,
   RootNode,
 } from '../metadataNode.js';
 import { pageTemplate } from './pageTemplate.js';
@@ -29,8 +28,9 @@ export class GalleryHandler implements BuildCommandHandler {
 
   private async buildGallery(jsonPath: string, outputFile: string) {
     const rootNode: RootNode = JSON.parse(await fs.readFile(jsonPath, 'utf-8'));
-    const imgElements = this.convertToImage(
+    const { mainElements, sidebarElement } = this.buildElements(
       rootNode.path,
+      '0',
       '/',
       rootNode.contents,
     );
@@ -38,52 +38,94 @@ export class GalleryHandler implements BuildCommandHandler {
     await fs.mkdir(path.dirname(outputFile), { recursive: true });
     await fs.writeFile(
       outputFile,
-      pageTemplate(imgElements.join('\n')),
+      pageTemplate(mainElements.join('\n'), sidebarElement),
       'utf-8',
     );
     console.log(`Gallery generated at ${outputFile}`);
   }
 
-  private convertToImage(
+  private buildElements(
     baseDirectoryPath: string,
-    hierarchy: string,
+    address: string,
+    breadcrumbs: string,
     contents: ContentsNode[],
-  ): string[] {
-    const htmlElements: string[] = [];
+  ): { mainElements: string[]; sidebarElement: string | null } {
+    const mainElements: string[] = [];
+    let sidebarElement: string | null = null;
 
     const files = this.getFiles(contents);
-    if (files.length > 0) {
+    const fileExists = files.length > 0;
+    if (fileExists) {
       const photoElements: string[] = files.map((file) => {
         const filePath = path.join(baseDirectoryPath, file.name);
         return createLazyImage(filePath, file.name, file.width, file.height);
       });
-      htmlElements.push(`
-        <h2>${escapeHtml(hierarchy)}</h2>
-        <image-container>${photoElements.join('\n')}</image-container>
-      `);
+      mainElements.push(`<h2 id="${address}">${escapeHtml(breadcrumbs)}</h2>`);
+      mainElements.push(
+        `<image-container>${photoElements.join('\n')}</image-container>`,
+      );
+      const directoryName = path.basename(breadcrumbs) || '/';
+      const anchor = `<a href="#${address}">${directoryName}</a>`;
+      sidebarElement = `<li>${anchor}</li>`;
     }
 
     const directories = this.getDirectories(contents);
     if (directories.length > 0) {
-      directories.forEach((directory) => {
+      const sidebarListElements: string[] = [];
+      directories.forEach((directory, index) => {
         const directoryPath = path.join(baseDirectoryPath, directory.name);
-        const childImages = this.convertToImage(
+        const {
+          mainElements: childMainElements,
+          sidebarElement: childSidebarListElement,
+        } = this.buildElements(
           directoryPath,
-          `${hierarchy}${directory.name}/`,
+          `${address}-${index}`,
+          `${breadcrumbs}${directory.name}/`,
           directory.contents,
         );
-        htmlElements.push(...childImages);
+        mainElements.push(...childMainElements);
+        if (childSidebarListElement !== null) {
+          sidebarListElements.push(childSidebarListElement);
+        }
       });
+
+      if (sidebarListElements.length > 0 || fileExists) {
+        const directoryName = path.basename(breadcrumbs) || '/';
+        const anchorOrSpan = fileExists
+          ? `<a href="#${address}">${directoryName}</a>`
+          : `<span>${directoryName}</span>`;
+        const childrenHtml =
+          sidebarListElements.length > 0
+            ? `\n<ul>${sidebarListElements.join('\n')}</ul>`
+            : '';
+        sidebarElement = `<li>${anchorOrSpan}${childrenHtml}</li>`;
+      }
     }
 
-    return htmlElements;
+    return {
+      mainElements,
+      sidebarElement:
+        sidebarElement === null ? null : `<ul>${sidebarElement}</ul>`,
+    };
   }
 
-  private getDirectories(contents: ContentsNode[]): DirectoryNode[] {
-    return contents.filter((c) => c.type === 'directory');
+  private getDirectories(
+    contents: ContentsNode[],
+  ): ContentsNodeWithType<'directory'>[] {
+    return contents.filter((c) => this.isDirectory(c));
   }
 
-  private getFiles(contents: ContentsNode[]): FileNode[] {
-    return contents.filter((c) => c.type === 'file');
+  private getFiles(contents: ContentsNode[]): ContentsNodeWithType<'file'>[] {
+    return contents.filter((c) => this.isFile(c));
+  }
+
+  private isDirectory(
+    node: ContentsNode,
+  ): node is ContentsNodeWithType<'directory'> {
+    return node.type === 'directory';
+  }
+
+  private isFile(node: ContentsNode): node is ContentsNodeWithType<'file'> {
+    return node.type === 'file';
   }
 }

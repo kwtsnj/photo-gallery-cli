@@ -21,7 +21,7 @@ export interface FileNode {
 
 export type Contents = keyof ContentsNodeMap;
 
-type ContentsNodeWithType<K extends Contents> = ContentsNodeMap[K] & {
+export type ContentsNodeWithType<K extends Contents> = ContentsNodeMap[K] & {
   type: K;
 };
 

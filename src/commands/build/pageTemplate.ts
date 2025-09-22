@@ -6,7 +6,10 @@ import {
 } from './components/lazy-image.js';
 
 // language=html
-export const pageTemplate = (gallery: string) => html`
+export const pageTemplate = (
+  gallery: string,
+  sidebarListElement: string | null,
+) => html`
   <!DOCTYPE html>
   <html lang="ja">
     <head>
@@ -35,6 +38,10 @@ export const pageTemplate = (gallery: string) => html`
           background-color: #e5e5f7;
           opacity: 0.8;
           z-index: -1;
+        }
+
+        ul {
+          padding-left: 0.5em;
         }
 
         .container {
@@ -88,11 +95,7 @@ export const pageTemplate = (gallery: string) => html`
       </div>
       <div class="container">
         <!-- 左側：リンク集 -->
-        <nav class="sidebar">
-          <a href="#section1">セクション1</a>
-          <a href="#section2">セクション2</a>
-          <a href="#section3">セクション3</a>
-        </nav>
+        <nav class="sidebar">${sidebarListElement}</nav>
         <main class="main-content">
           <h2 id="section1">セクション1</h2>
           <p>ここはセクション1の内容です。スクロールできます。</p>
