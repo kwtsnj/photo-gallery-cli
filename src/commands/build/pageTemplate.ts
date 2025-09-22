@@ -18,13 +18,13 @@ export const pageTemplate = (
       <style>
         /* デフォルト（ライト） */
         :root {
-          --sidebar-color: #fff;
-          --sidebar-color-standby: #fff9;
-          --sidebar-backgroud-color: #484ca3;
+          --sidebar-color-primary: #fff;
+          --sidebar-color-secondary: #fff9;
+          --sidebar-backgroud-color-primary: #484ca3;
 
-          --main-color: #fff;
-          --main-backgroud-color: #fafafa;
-          --main-card-header-color: #393c7f;
+          --main-color-primary: #fff;
+          --main-backgroud-color-primary: #fafafa;
+          --main-card-header-color-primary: #393c7f;
         }
 
         /* TODO: ダークテーマ */
@@ -49,24 +49,26 @@ export const pageTemplate = (
         li::before {
           content: '';
           display: inline-block;
-          background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PGcgZmlsbD0iY3VycmVudENvbG9yIj4gPHBhdGggZD0iTTQ5Ni4xNDUsMTEyLjkwOWMtOS43MzUtOS43NTgtMjMuMzk2LTE1Ljg1NS0zOC4yNzgtMTUuODQ2SDIxMi43NjFjLTMuMDExLDAtNS45MzEtMS4xNDctOC4xNS0zLjIzNSBsMC4wMTYsMC4wMjZsLTQzLjA3LTQwLjM5Yy0xMC4wNC05LjQwNS0yMy4yNzItMTQuNjQzLTM3LjAyNC0xNC42NDNoLTcwLjRjLTE0Ljg4Mi0wLjAwOC0yOC41NTIsNi4wOTYtMzguMjc4LDE1Ljg1NiBDNi4wOTYsNjQuNDAzLTAuMDA4LDc4LjA3MiwwLDkyLjk1NHYzMjYuMDkyYy0wLjAwOCwxNC44ODIsNi4wOTYsMjguNTUxLDE1Ljg1NSwzOC4yNzdjOS43MjYsOS43NTksMjMuMzk2LDE1Ljg2MywzOC4yNzgsMTUuODU2IGg0MDMuNzM0YzE0Ljg4MiwwLjAwOCwyOC41NTItNi4wOTYsMzguMjc4LTE1Ljg1NmM5Ljc1OS05LjcyNiwxNS44NjMtMjMuMzk1LDE1Ljg1NS0zOC4yNzdWMTUxLjE4NyBDNTEyLjAwOCwxMzYuMzA1LDUwNS45MDQsMTIyLjYzNiw0OTYuMTQ1LDExMi45MDl6IE00NjYuMjgyLDQyNy40NTJjLTIuMjI4LDIuMTk0LTUuMDY1LDMuNDgxLTguNDE0LDMuNDlINTQuMTMzIGMtMy4zNS0wLjAwOC02LjE4Ny0xLjI5Ni04LjQxNC0zLjQ5Yy0yLjE4Ni0yLjIxOS0zLjQ3My01LjA1Ny0zLjQ4MS04LjQwNlY5Mi45NTRjMC4wMDgtMy4zNSwxLjI5NS02LjE4NywzLjQ4MS04LjQxNSBjMi4yMjgtMi4xODYsNS4wNjUtMy40NzIsOC40MTQtMy40ODFoNzAuNGMzLjAyOCwwLDUuOTIzLDEuMTQ3LDguMTQyLDMuMjE4bDQzLjA2Miw0MC4zODFsMC4wMTYsMC4wMjUgYzEwLjAxNSw5LjM2MywyMy4yMzksMTQuNjE4LDM3LjAwNywxNC42MThoMjQ1LjEwNmMzLjM1LDAuMDA4LDYuMTk2LDEuMjk1LDguNDE0LDMuNDgxYzIuMTg2LDIuMjE5LDMuNDc0LDUuMDU3LDMuNDgxLDguNDA2IHYyNjcuODU5QzQ2OS43NTYsNDIyLjM5NSw0NjguNDY4LDQyNS4yMzMsNDY2LjI4Miw0MjcuNDUyeiI+PC9wYXRoPjwvZz48L3N2Zz4=");
-            no-repeat center;
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSIyNTYiIGhlaWdodD0iMjU2IiB2aWV3Qm94PSIwIDAgMjU2IDI1NiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CiAgPGcgc3R5bGU9InN0cm9rZTogbm9uZTsgc3Ryb2tlLXdpZHRoOiAwOyBzdHJva2UtZGFzaGFycmF5OiBub25lOyBzdHJva2UtbGluZWNhcDogYnV0dDsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLW1pdGVybGltaXQ6IDEwOyBmaWxsOiBub25lOyBmaWxsLXJ1bGU6IG5vbnplcm87IG9wYWNpdHk6IDE7IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjQwNjU5MzQwNjU5MzQwMTYgMS40MDY1OTM0MDY1OTM0MDE2KSBzY2FsZSgyLjgxIDIuODEpIj4KICAgIDxwYXRoIGQ9Ik0gMCA2OC43OTggdiAxMS45MTQgYyAwIDEuNzEzIDEuNDAxIDMuMTE0IDMuMTE0IDMuMTE0IGggMCBjIDMuMzQ0IDAgNC44MDUgLTIuNjQyIDQuODA1IC0yLjY0MiBMIDguMTQgMjkuMjgxIGwgMi43MzkgLTIuODI3IGwgNzIuODk0IC0yLjk3NyB2IC0xLjQ4MiBjIDAgLTIuMzk2IC0xLjk0MiAtNC4zMzggLTQuMzM4IC00LjMzOCBIIDUwLjIzNiBjIC0xLjE1IDAgLTIuMjU0IC0wLjQ1NyAtMy4wNjcgLTEuMjcgbCAtOC45NDMgLTguOTQzIGMgLTAuODEzIC0wLjgxMyAtMS45MTcgLTEuMjcgLTMuMDY3IC0xLjI3IEggNC4zMzggQyAxLjk0MiA2LjE3NCAwIDguMTE2IDAgMTAuNTEyIHYgNy4xNDYgdiAyLjMzMiBWIDY4Ljc5OCIgc3R5bGU9InN0cm9rZTogbm9uZTsgc3Ryb2tlLXdpZHRoOiAxOyBzdHJva2UtZGFzaGFycmF5OiBub25lOyBzdHJva2UtbGluZWNhcDogYnV0dDsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLW1pdGVybGltaXQ6IDEwOyBmaWxsOiByZ2IoMjI0LDE3Myw0OSk7IGZpbGwtcnVsZTogbm9uemVybzsgb3BhY2l0eTogMTsiIHRyYW5zZm9ybT0iIG1hdHJpeCgxIDAgMCAxIDAgMCkgIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxwYXRoIGQ9Ik0gMy4xMTQgODMuODI2IEwgMy4xMTQgODMuODI2IGMgMS43MTMgMCAzLjExNCAtMS40MDEgMy4xMTQgLTMuMTE0IFYgMjcuODEgYyAwIC0yLjM5MyAxLjk0IC00LjMzMyA0LjMzMyAtNC4zMzMgaCA3NS4xMDcgYyAyLjM5MyAwIDQuMzMzIDEuOTQgNC4zMzMgNC4zMzMgdiA1MS42ODQgYyAwIDIuMzkzIC0xLjk0IDQuMzMzIC00LjMzMyA0LjMzMyBDIDg1LjY2NyA4My44MjYgMy4xMTQgODMuODI2IDMuMTE0IDgzLjgyNiB6IiBzdHlsZT0ic3Ryb2tlOiBub25lOyBzdHJva2Utd2lkdGg6IDE7IHN0cm9rZS1kYXNoYXJyYXk6IG5vbmU7IHN0cm9rZS1saW5lY2FwOiBidXR0OyBzdHJva2UtbGluZWpvaW46IG1pdGVyOyBzdHJva2UtbWl0ZXJsaW1pdDogMTA7IGZpbGw6IHJnYigyNTUsMjAwLDY3KTsgZmlsbC1ydWxlOiBub256ZXJvOyBvcGFjaXR5OiAxOyIgdHJhbnNmb3JtPSIgbWF0cml4KDEgMCAwIDEgMCAwKSAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwvZz4KPC9zdmc+');
           width: 1em;
           height: 1em;
           background-size: contain;
           margin-right: 0.5em;
         }
 
+        ul span {
+          color: var(--sidebar-color-secondary);
+        }
+
         ul a,
         a:visited,
         a:hover,
         a:active {
-          color: var(--sidebar-color-standby);
+          color: var(--sidebar-color-primary);
           text-decoration: none;
         }
 
         ul a:hover {
-          color: var(--sidebar-color);
           text-decoration: underline;
         }
 
@@ -78,18 +80,18 @@ export const pageTemplate = (
         .sidebar-content {
           height: 100%;
           width: 200px;
-          color: var(--sidebar-color);
-          background-color: var(--sidebar-backgroud-color);
-          padding: 1rem;
+          color: var(--sidebar-color-primary);
+          background-color: var(--sidebar-backgroud-color-primary);
+          padding: 0.5em 1em;
           box-sizing: border-box;
           border-right: 1px solid #ccc;
           overflow: auto;
         }
 
         .main-content {
-          background-color: var(--main-backgroud-color);
+          background-color: var(--main-backgroud-color-primary);
           flex: 1; /* 残りの幅を埋める */
-          padding: 1rem;
+          padding: 1em;
           overflow-y: auto; /* 縦スクロール可能 */
           box-sizing: border-box;
           display: flex;
@@ -127,7 +129,10 @@ export const pageTemplate = (
         <img src="" alt="" />
       </div>
       <div class="container">
-        <nav class="sidebar-content">${sidebarListElement}</nav>
+        <nav class="sidebar-content">
+          <h3>フォルダ</h3>
+          ${sidebarListElement}
+        </nav>
         <main class="main-content">${gallery}</main>
       </div>
       ${imageContainerScript} ${lazyImageScript}
