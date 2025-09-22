@@ -16,6 +16,22 @@ export const pageTemplate = (
       <meta charset="UTF-8" />
       <title>Photo Gallery</title>
       <style>
+        /* デフォルト（ライト） */
+        :root {
+          --sidebar-color: #fff;
+          --sidebar-color-standby: #fff9;
+          --sidebar-backgroud-color: #484ca3;
+
+          --main-color: #fff;
+          --main-backgroud-color: #fafafa;
+          --main-card-header-color: #393c7f;
+        }
+
+        /* TODO: ダークテーマ */
+        :root[data-theme='dark'] {
+          --sidebar-backgroud-color: #fff;
+        }
+
         html {
           /* アンカー移動をスムーズに */
           scroll-behavior: smooth;
@@ -33,7 +49,7 @@ export const pageTemplate = (
         li::before {
           content: '';
           display: inline-block;
-          background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PGc+IDxwYXRoIGQ9Ik00OTYuMTQ1LDExMi45MDljLTkuNzM1LTkuNzU4LTIzLjM5Ni0xNS44NTUtMzguMjc4LTE1Ljg0NkgyMTIuNzYxYy0zLjAxMSwwLTUuOTMxLTEuMTQ3LTguMTUtMy4yMzUgbDAuMDE2LDAuMDI2bC00My4wNy00MC4zOWMtMTAuMDQtOS40MDUtMjMuMjcyLTE0LjY0My0zNy4wMjQtMTQuNjQzaC03MC40Yy0xNC44ODItMC4wMDgtMjguNTUyLDYuMDk2LTM4LjI3OCwxNS44NTYgQzYuMDk2LDY0LjQwMy0wLjAwOCw3OC4wNzIsMCw5Mi45NTR2MzI2LjA5MmMtMC4wMDgsMTQuODgyLDYuMDk2LDI4LjU1MSwxNS44NTUsMzguMjc3YzkuNzI2LDkuNzU5LDIzLjM5NiwxNS44NjMsMzguMjc4LDE1Ljg1NiBoNDAzLjczNGMxNC44ODIsMC4wMDgsMjguNTUyLTYuMDk2LDM4LjI3OC0xNS44NTZjOS43NTktOS43MjYsMTUuODYzLTIzLjM5NSwxNS44NTUtMzguMjc3VjE1MS4xODcgQzUxMi4wMDgsMTM2LjMwNSw1MDUuOTA0LDEyMi42MzYsNDk2LjE0NSwxMTIuOTA5eiBNNDY2LjI4Miw0MjcuNDUyYy0yLjIyOCwyLjE5NC01LjA2NSwzLjQ4MS04LjQxNCwzLjQ5SDU0LjEzMyBjLTMuMzUtMC4wMDgtNi4xODctMS4yOTYtOC40MTQtMy40OWMtMi4xODYtMi4yMTktMy40NzMtNS4wNTctMy40ODEtOC40MDZWOTIuOTU0YzAuMDA4LTMuMzUsMS4yOTUtNi4xODcsMy40ODEtOC40MTUgYzIuMjI4LTIuMTg2LDUuMDY1LTMuNDcyLDguNDE0LTMuNDgxaDcwLjRjMy4wMjgsMCw1LjkyMywxLjE0Nyw4LjE0MiwzLjIxOGw0My4wNjIsNDAuMzgxbDAuMDE2LDAuMDI1IGMxMC4wMTUsOS4zNjMsMjMuMjM5LDE0LjYxOCwzNy4wMDcsMTQuNjE4aDI0NS4xMDZjMy4zNSwwLjAwOCw2LjE5NiwxLjI5NSw4LjQxNCwzLjQ4MWMyLjE4NiwyLjIxOSwzLjQ3NCw1LjA1NywzLjQ4MSw4LjQwNiB2MjY3Ljg1OUM0NjkuNzU2LDQyMi4zOTUsNDY4LjQ2OCw0MjUuMjMzLDQ2Ni4yODIsNDI3LjQ1MnoiIHN0eWxlPSJmaWxsOiByZ2IoNzUsIDc1LCA3NSk7Ij48L3BhdGg+PC9nPjwvc3ZnPg==')
+          background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PGcgZmlsbD0iY3VycmVudENvbG9yIj4gPHBhdGggZD0iTTQ5Ni4xNDUsMTEyLjkwOWMtOS43MzUtOS43NTgtMjMuMzk2LTE1Ljg1NS0zOC4yNzgtMTUuODQ2SDIxMi43NjFjLTMuMDExLDAtNS45MzEtMS4xNDctOC4xNS0zLjIzNSBsMC4wMTYsMC4wMjZsLTQzLjA3LTQwLjM5Yy0xMC4wNC05LjQwNS0yMy4yNzItMTQuNjQzLTM3LjAyNC0xNC42NDNoLTcwLjRjLTE0Ljg4Mi0wLjAwOC0yOC41NTIsNi4wOTYtMzguMjc4LDE1Ljg1NiBDNi4wOTYsNjQuNDAzLTAuMDA4LDc4LjA3MiwwLDkyLjk1NHYzMjYuMDkyYy0wLjAwOCwxNC44ODIsNi4wOTYsMjguNTUxLDE1Ljg1NSwzOC4yNzdjOS43MjYsOS43NTksMjMuMzk2LDE1Ljg2MywzOC4yNzgsMTUuODU2IGg0MDMuNzM0YzE0Ljg4MiwwLjAwOCwyOC41NTItNi4wOTYsMzguMjc4LTE1Ljg1NmM5Ljc1OS05LjcyNiwxNS44NjMtMjMuMzk1LDE1Ljg1NS0zOC4yNzdWMTUxLjE4NyBDNTEyLjAwOCwxMzYuMzA1LDUwNS45MDQsMTIyLjYzNiw0OTYuMTQ1LDExMi45MDl6IE00NjYuMjgyLDQyNy40NTJjLTIuMjI4LDIuMTk0LTUuMDY1LDMuNDgxLTguNDE0LDMuNDlINTQuMTMzIGMtMy4zNS0wLjAwOC02LjE4Ny0xLjI5Ni04LjQxNC0zLjQ5Yy0yLjE4Ni0yLjIxOS0zLjQ3My01LjA1Ny0zLjQ4MS04LjQwNlY5Mi45NTRjMC4wMDgtMy4zNSwxLjI5NS02LjE4NywzLjQ4MS04LjQxNSBjMi4yMjgtMi4xODYsNS4wNjUtMy40NzIsOC40MTQtMy40ODFoNzAuNGMzLjAyOCwwLDUuOTIzLDEuMTQ3LDguMTQyLDMuMjE4bDQzLjA2Miw0MC4zODFsMC4wMTYsMC4wMjUgYzEwLjAxNSw5LjM2MywyMy4yMzksMTQuNjE4LDM3LjAwNywxNC42MThoMjQ1LjEwNmMzLjM1LDAuMDA4LDYuMTk2LDEuMjk1LDguNDE0LDMuNDgxYzIuMTg2LDIuMjE5LDMuNDc0LDUuMDU3LDMuNDgxLDguNDA2IHYyNjcuODU5QzQ2OS43NTYsNDIyLjM5NSw0NjguNDY4LDQyNS4yMzMsNDY2LjI4Miw0MjcuNDUyeiI+PC9wYXRoPjwvZz48L3N2Zz4=");
             no-repeat center;
           width: 1em;
           height: 1em;
@@ -41,15 +57,29 @@ export const pageTemplate = (
           margin-right: 0.5em;
         }
 
+        ul a,
+        a:visited,
+        a:hover,
+        a:active {
+          color: var(--sidebar-color-standby);
+          text-decoration: none;
+        }
+
+        ul a:hover {
+          color: var(--sidebar-color);
+          text-decoration: underline;
+        }
+
         .container {
           display: flex;
           height: 100vh;
         }
 
-        .sidebar {
+        .sidebar-content {
           height: 100%;
           width: 200px;
-          background: #f0f0f0;
+          color: var(--sidebar-color);
+          background-color: var(--sidebar-backgroud-color);
           padding: 1rem;
           box-sizing: border-box;
           border-right: 1px solid #ccc;
@@ -57,6 +87,7 @@ export const pageTemplate = (
         }
 
         .main-content {
+          background-color: var(--main-backgroud-color);
           flex: 1; /* 残りの幅を埋める */
           padding: 1rem;
           overflow-y: auto; /* 縦スクロール可能 */
@@ -96,7 +127,7 @@ export const pageTemplate = (
         <img src="" alt="" />
       </div>
       <div class="container">
-        <nav class="sidebar">${sidebarListElement}</nav>
+        <nav class="sidebar-content">${sidebarListElement}</nav>
         <main class="main-content">${gallery}</main>
       </div>
       ${imageContainerScript} ${lazyImageScript}

@@ -18,7 +18,8 @@ const imageContainerHtmlTemplate = html`
     }
 
     .card-header {
-      background-color: bisque;
+      color: var(--main-color);
+      background-color: var(--main-card-header-color);
       padding: 0 10px;
       border-bottom: 1px solid #000;
     }
