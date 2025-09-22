@@ -49,23 +49,29 @@ export class GalleryHandler implements BuildCommandHandler {
     address: string,
     breadcrumbs: string,
     contents: ContentsNode[],
-  ): { mainElements: string[]; sidebarElement: string | null } {
+  ): {
+    mainElements: string[];
+    sidebarElement: string | null;
+  } {
     const mainElements: string[] = [];
     let sidebarElement: string | null = null;
 
     const files = this.getFiles(contents);
-    const fileExists = files.length > 0;
+    let imageCount = files.length;
+    const fileExists = imageCount > 0;
     if (fileExists) {
       const photoElements: string[] = files.map((file) => {
         const filePath = path.join(baseDirectoryPath, file.name);
         return createLazyImage(filePath, file.name, file.width, file.height);
       });
-      mainElements.push(`<h2 id="${address}">${escapeHtml(breadcrumbs)}</h2>`);
+      mainElements.push(
+        `<h2 id="${address}">${escapeHtml(breadcrumbs)} (${imageCount})</h2>`,
+      );
       mainElements.push(
         `<image-container>${photoElements.join('\n')}</image-container>`,
       );
       const directoryName = path.basename(breadcrumbs) || '/';
-      const anchor = `<a href="#${address}">${directoryName}</a>`;
+      const anchor = `<a href="#${address}">${directoryName} (${imageCount})</a>`;
       sidebarElement = `<li>${anchor}</li>`;
     }
 
@@ -92,7 +98,7 @@ export class GalleryHandler implements BuildCommandHandler {
       if (sidebarListElements.length > 0 || fileExists) {
         const directoryName = path.basename(breadcrumbs) || '/';
         const anchorOrSpan = fileExists
-          ? `<a href="#${address}">${directoryName}</a>`
+          ? `<a href="#${address}">${directoryName} (${imageCount})</a>`
           : `<span>${directoryName}</span>`;
         const childrenHtml =
           sidebarListElements.length > 0
