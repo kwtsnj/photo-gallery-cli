@@ -50,11 +50,13 @@ export const pageTemplate = (
         }
 
         .sidebar {
-          width: 200px; /* 左メニュー幅 */
+          height: 100%;
+          width: 200px;
           background: #f0f0f0;
           padding: 1rem;
           box-sizing: border-box;
           border-right: 1px solid #ccc;
+          overflow: auto;
         }
 
         .main-content {
