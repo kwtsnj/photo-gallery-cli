@@ -62,6 +62,9 @@ export const pageTemplate = (
           padding: 1rem;
           overflow-y: auto; /* 縦スクロール可能 */
           box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          gap: 1em;
         }
 
         .overlay {

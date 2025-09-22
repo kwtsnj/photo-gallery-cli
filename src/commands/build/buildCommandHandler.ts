@@ -64,12 +64,11 @@ export class GalleryHandler implements BuildCommandHandler {
         const filePath = path.join(baseDirectoryPath, file.name);
         return createLazyImage(filePath, file.name, file.width, file.height);
       });
-      mainElements.push(
-        `<h2 id="${address}">${escapeHtml(breadcrumbs)} (${imageCount})</h2>`,
-      );
-      mainElements.push(
-        `<image-container>${photoElements.join('\n')}</image-container>`,
-      );
+      mainElements.push(`
+        <image-container>
+          <h2 id="${address}" slot="header">${escapeHtml(breadcrumbs)} (${imageCount})</h2>
+          ${photoElements.join('\n')}
+        </image-container>`);
       const directoryName = path.basename(breadcrumbs) || '/';
       const anchor = `<a href="#${address}">${directoryName} (${imageCount})</a>`;
       sidebarElement = `<li>${anchor}</li>`;
