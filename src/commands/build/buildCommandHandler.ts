@@ -76,12 +76,12 @@ export class GalleryHandler implements BuildCommandHandler {
 
     const directories = this.getDirectories(contents);
     if (directories.length > 0) {
-      const sidebarListElements: string[] = [];
+      const sidebarElements: string[] = [];
       directories.forEach((directory, index) => {
         const directoryPath = path.join(baseDirectoryPath, directory.name);
         const {
           mainElements: childMainElements,
-          sidebarElement: childSidebarListElement,
+          sidebarElement: childSidebarElement,
         } = this.buildElements(
           directoryPath,
           `${address}-${index}`,
@@ -89,21 +89,24 @@ export class GalleryHandler implements BuildCommandHandler {
           directory.contents,
         );
         mainElements.push(...childMainElements);
-        if (childSidebarListElement !== null) {
-          sidebarListElements.push(childSidebarListElement);
+        if (childSidebarElement !== null) {
+          sidebarElements.push(childSidebarElement);
         }
       });
 
-      if (sidebarListElements.length > 0 || fileExists) {
+      if (sidebarElements.length > 0 || fileExists) {
         const directoryName = path.basename(breadcrumbs) || '/';
         const anchorOrSpan = fileExists
           ? `<a href="#${address}">${this.buildFolderSVG()} ${directoryName} (${imageCount})</a>`
           : `<span>${this.buildFolderSVG()} ${directoryName}</span>`;
         const childrenHtml =
-          sidebarListElements.length > 0
-            ? `\n<ul>${sidebarListElements.join('\n')}</ul>`
-            : '';
-        sidebarElement = `<li>${anchorOrSpan}${childrenHtml}</li>`;
+          sidebarElements.length > 0 ? `${sidebarElements.join('\n')}` : '';
+        sidebarElement = `
+          <li>
+            ${anchorOrSpan}
+            ${childrenHtml}
+          </li>
+        `;
       }
     }
 
