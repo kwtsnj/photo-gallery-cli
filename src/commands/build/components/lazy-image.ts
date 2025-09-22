@@ -13,11 +13,15 @@ const lazyImageHtmlTemplate = html`
     .photo {
       height: 100%;
       object-fit: contain;
-      box-shadow: 10px 5px 5px #bbbbbb;
+      transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease;
     }
 
     .photo:hover {
       cursor: pointer;
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 10px 5px 5px #bbbbbb;
     }
   </style>
   <img src="" id="photo" class="photo" alt="" />
