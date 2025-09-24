@@ -71,16 +71,12 @@ export const lazyImageScript = html`
       }
 
       connectedCallback() {
-        if (this.img) {
-          this.addEventListener('click', onImgClick);
-        }
+        this.addEventListener('click', onImgClick);
         imgIntersectionObserver.observe(this);
       }
 
       disconnectedCallback() {
-        if (this.img) {
-          this.removeEventListener('click', onImgClick);
-        }
+        this.removeEventListener('click', onImgClick);
         imgIntersectionObserver.unobserve(this);
       }
 
