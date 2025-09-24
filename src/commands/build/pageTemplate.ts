@@ -4,6 +4,7 @@ import {
   LAZY_IMAGE_CLICK_EVENT_NAME,
   lazyImageScript,
 } from './components/lazy-image.js';
+import { SIDEBAR_TREE_CLASS_NAME } from './buildCommandHandler';
 
 // language=html
 export const pageTemplate = (
@@ -51,29 +52,30 @@ export const pageTemplate = (
           padding: 0;
         }
 
-        ul {
-          padding-left: 0.5em;
+        ul.${SIDEBAR_TREE_CLASS_NAME},
+        ul.${SIDEBAR_TREE_CLASS_NAME} ul {
+          padding-left: 1em;
           list-style: none;
         }
 
-        ul svg {
+        ul.${SIDEBAR_TREE_CLASS_NAME} svg {
           width: 0.8em;
           height: 0.8em;
         }
 
-        ul span {
+        ul.${SIDEBAR_TREE_CLASS_NAME} span {
           color: var(--sidebar-color-secondary);
         }
 
-        ul a,
-        a:visited,
-        a:hover,
-        a:active {
+        ul.${SIDEBAR_TREE_CLASS_NAME} a,
+        ul.${SIDEBAR_TREE_CLASS_NAME} a:visited,
+        ul.${SIDEBAR_TREE_CLASS_NAME} a:hover,
+        ul.${SIDEBAR_TREE_CLASS_NAME} a:active {
           color: var(--sidebar-color-primary);
           text-decoration: none;
         }
 
-        ul a:hover {
+        ul.${SIDEBAR_TREE_CLASS_NAME} a:hover {
           text-decoration: underline;
         }
 
@@ -84,7 +86,7 @@ export const pageTemplate = (
 
         .sidebar-content {
           height: 100%;
-          width: 200px;
+          width: 20em;
           color: var(--sidebar-color-primary);
           background-color: var(--sidebar-backgroud-color-primary);
           padding: 0.5em 1em;

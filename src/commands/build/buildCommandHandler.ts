@@ -10,6 +10,8 @@ import { pageTemplate } from './pageTemplate.js';
 import { createLazyImage } from './components/lazy-image.js';
 import { escapeHtml } from './htmlHelper.js';
 
+export const SIDEBAR_TREE_CLASS_NAME = 'sidebar-tree';
+
 export interface BuildCommandHandler {
   handle: (args: BuildArgs) => Promise<void>;
 }
@@ -33,6 +35,7 @@ export class GalleryHandler implements BuildCommandHandler {
       '0',
       '/',
       rootNode.contents,
+      true,
     );
 
     await fs.mkdir(path.dirname(outputFile), { recursive: true });
@@ -49,6 +52,7 @@ export class GalleryHandler implements BuildCommandHandler {
     address: string,
     breadcrumbs: string,
     contents: ContentsNode[],
+    isRoot: boolean,
   ): {
     mainElements: string[];
     sidebarElement: string | null;
@@ -87,6 +91,7 @@ export class GalleryHandler implements BuildCommandHandler {
           `${address}-${index}`,
           `${breadcrumbs}${directory.name}/`,
           directory.contents,
+          false,
         );
         mainElements.push(...childMainElements);
         if (childSidebarElement !== null) {
@@ -110,10 +115,13 @@ export class GalleryHandler implements BuildCommandHandler {
       }
     }
 
+    const styles = isRoot ? SIDEBAR_TREE_CLASS_NAME : '';
     return {
       mainElements,
       sidebarElement:
-        sidebarElement === null ? null : `<ul>${sidebarElement}</ul>`,
+        sidebarElement === null
+          ? null
+          : `<ul class="${styles}">${sidebarElement}</ul>`,
     };
   }
 
