@@ -118,6 +118,7 @@ export const pageTemplate = (
 
         .overlay.active {
           display: flex;
+          z-index: 9999;
         }
 
         .overlay img {
