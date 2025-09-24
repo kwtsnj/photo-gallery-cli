@@ -65,6 +65,7 @@ export const pageTemplate = (
 
         ul.${SIDEBAR_TREE_CLASS_NAME} span {
           color: var(--sidebar-color-secondary);
+          white-space: nowrap;
         }
 
         ul.${SIDEBAR_TREE_CLASS_NAME} a,
@@ -73,6 +74,7 @@ export const pageTemplate = (
         ul.${SIDEBAR_TREE_CLASS_NAME} a:active {
           color: var(--sidebar-color-primary);
           text-decoration: none;
+          white-space: nowrap;
         }
 
         ul.${SIDEBAR_TREE_CLASS_NAME} a:hover {
