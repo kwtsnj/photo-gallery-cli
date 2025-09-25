@@ -1,11 +1,9 @@
 import type { ArgumentsCamelCase, Argv, CommandModule } from 'yargs';
-import {
-  type BuildCommandHandler,
-  ConsoleOutputHandler,
-  GalleryHandler,
-} from './buildCommandHandler';
+import { type BuildCommandHandler } from './handler/buildCommandHandler';
 import { DEFAULT_METADATA_FILE_NAME } from '../consts.js';
 import type { Camelize } from '../utilityTypes.js';
+import { ConsoleOutputHandler } from './handler/consoleOutputHandler.js';
+import { GalleryOutputHandler } from './handler/galleryOutputHandler.js';
 
 interface PrimitiveBuildArgs {
   'input-file': string;
@@ -40,7 +38,11 @@ async function handleArgv(argv: ArgumentsCamelCase<PrimitiveBuildArgs>) {
     inputFile: argv.inputFile,
     outputFile: argv.outputFile,
   };
-  await processHandlers(args, new ConsoleOutputHandler(), new GalleryHandler());
+  await processHandlers(
+    args,
+    new ConsoleOutputHandler(),
+    new GalleryOutputHandler(),
+  );
 }
 
 async function processHandlers(

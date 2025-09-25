@@ -1,29 +1,20 @@
-import fs from 'fs/promises';
-import path from 'path';
-import type { BuildArgs } from './buildCommand.js';
+import type { BuildArgs } from '../buildCommand.js';
 import type {
   ContentsNode,
   ContentsNodeWithType,
   RootNode,
-} from '../metadataNode.js';
-import { pageTemplate } from './pageTemplate.js';
-import { createLazyImage } from './components/lazy-image.js';
-import { escapeHtml } from './htmlHelper.js';
+} from '../../metadataNode.js';
+import fs from 'fs/promises';
+import path from 'path';
+import { pageTemplate } from '../pageTemplate.js';
+import { createLazyImage } from '../components/lazy-image.js';
+import { escapeHtml } from '../htmlHelper.js';
+import {
+  type BuildCommandHandler,
+  SIDEBAR_TREE_CLASS_NAME,
+} from './buildCommandHandler';
 
-export const SIDEBAR_TREE_CLASS_NAME = 'sidebar-tree';
-
-export interface BuildCommandHandler {
-  handle: (args: BuildArgs) => Promise<void>;
-}
-
-export class ConsoleOutputHandler implements BuildCommandHandler {
-  public async handle(args: BuildArgs) {
-    console.log('input-file:', args.inputFile);
-    console.log('output-file:', args.outputFile);
-  }
-}
-
-export class GalleryHandler implements BuildCommandHandler {
+export class GalleryOutputHandler implements BuildCommandHandler {
   public async handle(args: BuildArgs) {
     await this.buildGallery(args.inputFile, args.outputFile);
   }

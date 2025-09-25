@@ -4,7 +4,7 @@ import {
   LAZY_IMAGE_CLICK_EVENT_NAME,
   lazyImageScript,
 } from './components/lazy-image.js';
-import { SIDEBAR_TREE_CLASS_NAME } from './buildCommandHandler';
+import { SIDEBAR_TREE_CLASS_NAME } from './handler/buildCommandHandler.js';
 
 // language=html
 export const pageTemplate = (
