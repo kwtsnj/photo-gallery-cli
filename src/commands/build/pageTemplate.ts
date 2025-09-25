@@ -147,29 +147,57 @@ export const pageTemplate = (
       </div>
       ${imageContainerScript} ${lazyImageScript}
       <script>
+        let currentImage = null;
         const overlay = document.getElementById('overlay');
         const overlayImg = overlay.querySelector('img');
+
+        function moveImage(offset) {
+          if (currentImage === null) {
+            return;
+          }
+          const images = Array.from(document.querySelectorAll('lazy-img'));
+          const index = images.indexOf(currentImage);
+          if (index + offset > images.length) {
+            // 範囲外
+            return;
+          }
+          if (index + offset < 0) {
+            // 範囲外
+            return;
+          }
+          const nextIndex = index + offset;
+          const nextElement = images[nextIndex];
+          if (nextElement) {
+            console.log('Next image:', currentImage.dataset.src);
+            currentImage = nextElement;
+            overlayImg.src = currentImage.dataset.src;
+            nextElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
 
         document.addEventListener('keydown', (e) => {
           switch (e.key) {
             case 'Escape':
-              console.log('ESCキーが押されました');
+              console.log('Press Escape');
               overlay.classList.remove('active');
               break;
             case 'ArrowRight':
-              console.log('右キーが押されました');
+              console.log('PRESS ArrowRight');
+              moveImage(1);
               break;
             case 'ArrowLeft':
-              console.log('左キーが押されました');
+              console.log('PRESS ArrowLeft');
+              moveImage(-1);
               break;
             default:
-              // それ以外のキーは無視
+              // nop
               break;
           }
         });
 
         window.addEventListener('load', () => {
           this.addEventListener('${LAZY_IMAGE_CLICK_EVENT_NAME}', (evt) => {
+            currentImage = evt.target;
             const imgSrc = evt?.detail?.src;
             if (imgSrc) {
               overlayImg.src = imgSrc;
@@ -179,6 +207,7 @@ export const pageTemplate = (
         });
 
         overlay.addEventListener('click', () => {
+          currentImage = null;
           overlay.classList.remove('active');
         });
       </script>
