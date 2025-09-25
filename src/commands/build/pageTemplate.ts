@@ -150,6 +150,24 @@ export const pageTemplate = (
         const overlay = document.getElementById('overlay');
         const overlayImg = overlay.querySelector('img');
 
+        document.addEventListener('keydown', (e) => {
+          switch (e.key) {
+            case 'Escape':
+              console.log('ESCキーが押されました');
+              overlay.classList.remove('active');
+              break;
+            case 'ArrowRight':
+              console.log('右キーが押されました');
+              break;
+            case 'ArrowLeft':
+              console.log('左キーが押されました');
+              break;
+            default:
+              // それ以外のキーは無視
+              break;
+          }
+        });
+
         window.addEventListener('load', () => {
           this.addEventListener('${LAZY_IMAGE_CLICK_EVENT_NAME}', (evt) => {
             const imgSrc = evt?.detail?.src;
